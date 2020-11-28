@@ -1,4 +1,4 @@
-from hypothesis import given, example
+from hypothesis import given, example, note
 import string
 import hypothesis.strategies as st
 from cipher import encrypt, decrypt
@@ -7,7 +7,9 @@ from cipher import encrypt, decrypt
 @given(st.text(string.ascii_letters))
 @example("hello world")
 def test_decrypt_deciphers_encrypt_fixed_key(s):
-    assert decrypt(encrypt(s, 20), 20) == s
+    cipher = encrypt(s, 20)
+    note(f"Text: {s}  -  Cipher: {cipher}")
+    assert decrypt(cipher, 20) == s
 
 @given(st.integers())
 def test_key_works(i):
